@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dao.UserinfoMapper">
+
+
+    <!--查找全部-->
+    <select id="findAll" resultType="com.entity.Userinfo">
+        SELECT * FROM userinfo;
+    </select>
+
+    <!--校对账号密码-->
+    <select id="findNamePassword" parameterType="com.entity.Userinfo" resultType="com.entity.Userinfo">
+        SELECT * FROM userinfo
+        WHERE loginName = #{loginName} and loginPassword = #{loginPassword}
+    </select>
+
+    <!--账号注册-->
+    <insert id="insertUserinfo" parameterType="com.entity.Userinfo">
+        INSERT INTO userinfo(loginName,loginPassword)
+            VALUE (#{loginName},#{loginPassword})
+    </insert>
+
+    <!--删除信息-->
+    <delete id="deleteByLoginName" parameterType="String">
+        DELETE FROM userinfo
+        WHERE loginName = #{loginName}
+    </delete>
+
+
+    <!--更新信息-->
+    <update id="updateLoginPassword" parameterType="com.entity.Userinfo">
+        UPDATE userinfo
+        SET loginPassword=#{loginPassword}
+        WHERE loginName=#{loginName}
+    </update>
+</mapper>

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dao.AdminMapper">
+
+    <!--查找全部-->
+    <select id="findAll"  resultType="com.entity.Traininfo">
+        SELECT * FROM traininfo;
+    </select>
+
+    <!--添加车次信息-->
+    <insert id="insertTraininfo" parameterType="com.entity.Traininfo">
+        INSERT INTO traininfo(trainid,carriagenumber,carriagenumpeo)
+            VALUE (#{trainid},#{carriagenumber},#{carriagenumpeo})
+    </insert>
+
+    <!--添加车次座位-->
+    <insert id="insertTrainseat" parameterType="String">
+        INSERT INTO traininfo(trainid)
+        VALUE (#{trainid})
+    </insert>
+
+    <!--添加并返回列车标识-->
+    <insert id="insertAndGetState" parameterType="com.entity.Trainseat" >
+        INSERT INTO trainseat(trainid) VALUE (#{trainid})
+        <selectKey keyColumn="trainstate" keyProperty="trainstate" order="AFTER" resultType="Integer">
+               select last_insert_id()
+        </selectKey>
+    </insert>
+
+    <!--添加列车线路的每个站点信息-->
+    <insert id="addStation" parameterType="com.entity.Station">
+        INSERT INTO station (trainstate,trainid,stationname,arrivaltime,departure,terminus,price)
+        VALUE (#{trainstate},#{trainid},#{stationname},#{arrivaltime},#{departure},#{terminus},#{price})
+    </insert>
+
+    <!--分页显示列车路线-->
+    <select id="stationlist" parameterType="int" resultType="com.entity.Station">
+        SELECT * FROM station limit #{index},4
+    </select>
+    <!-- 用于获取总页数 -->
+    <select id="pagecount" resultType="int">
+        SELECT COUNT(*) FROM station
+    </select>
+
+</mapper>

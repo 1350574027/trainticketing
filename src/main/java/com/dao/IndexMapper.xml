@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dao.IndexMapper">
+
+    <!--查找站点-->
+    <select id="findStation" parameterType="com.entity.SelectTrain" resultType="com.entity.Station">
+        SELECT * FROM station
+        WHERE stationname=#{chufa}
+    </select>
+
+    <!--查找列车标识-->
+    <select id="findTrainstate" parameterType="com.entity.SelectTrain" resultType="String">
+        SELECT trainstate FROM station
+        WHERE stationname=#{chufa} AND arrivaltime like '%${times}%'
+    </select>
+
+    <!--查找列车时间-->
+    <select id="findArrivaltime" parameterType="com.entity.SelectTrain" resultType="Date">
+        SELECT arrivaltime FROM station
+        WHERE stationname=#{chufa}
+    </select>
+
+    <!--查找列车号-->
+    <select id="findTrainid" parameterType="com.entity.Station" resultType="String">
+        SELECT trainid FROM station
+        WHERE stationname=#{stationname} AND trainstate=#{trainstate}
+    </select>
+
+    <!--查找id-->
+    <select id="findid" parameterType="com.entity.Station" resultType="Integer">
+        SELECT id FROM station
+        WHERE stationname=#{stationname} AND trainstate=#{trainstate}
+    </select>
+
+    <!--查找车次-->
+    <select id="findBystate" parameterType="Integer" resultType="com.entity.Station">
+        SELECT * FROM station
+        WHERE trainstate=#{trainstate}
+    </select>
+
+    <!--查找趟次车牌-->
+    <select id="findStateid" parameterType="Integer" resultType="String">
+        SELECT trainid FROM station
+        WHERE trainstate=#{trainstate}
+    </select>
+
+    <!--查找结果-->
+    <select id="findResult" parameterType="com.entity.SelectTrain" resultType="com.entity.Station">
+        SELECT * FROM station
+        WHERE trainstate=#{states} AND
+            (stationname =#{chufa} OR stationname =#{daoda})
+    </select>
+
+    <!--查找结果出发-->
+    <select id="findResultchufa" parameterType="com.entity.SelectTrain" resultType="com.entity.Station">
+        SELECT * FROM station
+        WHERE trainstate=#{states} AND
+            stationname =#{chufa}
+    </select>
+
+    <!--查找结果到达-->
+    <select id="findResultdaoda" parameterType="com.entity.SelectTrain" resultType="com.entity.Station">
+        SELECT * FROM station
+        WHERE trainstate=#{states} AND
+             stationname =#{daoda}
+    </select>
+
+</mapper>

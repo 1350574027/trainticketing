@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dao.PassengerinfoMapper">
+
+    <!--查找全部-->
+    <select id="findAll"  resultType="com.entity.Passengerinfo">
+        SELECT * FROM passengerinfo;
+    </select>
+
+    <!--查找一条乘客信息-->
+    <select id="findById" parameterType="Integer" resultType="com.entity.Passengerinfo">
+        SELECT * FROM passengerinfo
+        WHERE id=#{id}
+    </select>
+
+    <!--查找该账号的乘客信息-->
+    <select id="findMyself" parameterType="com.entity.Passengerinfo" resultType="com.entity.Passengerinfo">
+        SELECT * FROM passengerinfo
+        WHERE loginName=#{loginName}
+    </select>
+
+    <!--更新信息-->
+    <update id="update" parameterType="com.entity.Passengerinfo">
+        UPDATE passengerinfo
+        SET passengername=#{passengername},idcard=#{idcard},adult=#{adult},passengerpicture=#{passengerpicture},loginName=#{loginName}
+        WHERE id=#{id}
+    </update>
+
+    <!--添加信息-->
+    <insert id="insert" parameterType="com.entity.Passengerinfo">
+        INSERT INTO passengerinfo(passengername,idcard,adult,passengerpicture,loginName)
+            VALUE (#{passengername},#{idcard},#{adult},#{passengerpicture},#{loginName})
+    </insert>
+
+    <!--删除信息-->
+    <delete id="deleteById" parameterType="Integer">
+        DELETE FROM passengerinfo
+        WHERE id = #{id}
+    </delete>
+
+    <!--批量删除信息-->
+    <delete id="deleteBatch" parameterType="Integer">
+        DELETE FROM passengerinfo
+        WHERE 1=1 and id IN
+        <foreach collection="array" item="id" separator="," open="(" close=")">#{id}</foreach>
+    </delete>
+
+</mapper>

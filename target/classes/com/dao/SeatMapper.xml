@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dao.SeatMapper">
+
+    <!--查找站点-->
+    <select id="findtrainseat" parameterType="Integer" resultType="com.entity.Trainseat">
+        SELECT * FROM trainseat
+        WHERE trainstate=#{trainstate}
+    </select>
+
+    <!--查找列车信息-->
+    <select id="findTraininfo" parameterType="String" resultType="com.entity.Traininfo">
+        SELECT * FROM traininfo
+        WHERE trainid=#{trainid}
+    </select>
+
+    <!--修改剩余座位号-->
+    <update id="updateSeatid" parameterType="com.entity.ShowResult">
+        UPDATE trainseat
+        SET seatid=#{seatid}
+        WHERE trainstate=#{trainstate}
+    </update>
+
+
+</mapper>
