@@ -5,6 +5,7 @@ import java.util.List;
 public class PageUtil<T>{
     //属性
     private int pageNumber;//总记录数
+    private int numbersa;
     private int pageCount;//总页数
     private int pageIndex;//当前页
     private int pageSize;//每页大小
